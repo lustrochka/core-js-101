@@ -70,8 +70,12 @@ function getFactorial(n) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let sum = 0;
+  for (let i = n1; i <= n2; i += 1) {
+    sum += i;
+  }
+  return sum;
 }
 
 
@@ -277,8 +281,20 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arr = ccn.toString().split('').reverse();
+  let sum = 0;
+  arr.forEach((x, i) => {
+    const n = +x;
+    if (i % 2 === 0) {
+      sum += n;
+    } else if (n * 2 > 9) {
+      sum += n * 2 - 9;
+    } else {
+      sum += n * 2;
+    }
+  });
+  return sum % 10 === 0;
 }
 
 /**
@@ -325,8 +341,21 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const brackets = {
+    ']': '[', ')': '(', '}': '{', '>': '<',
+  };
+  for (let i = 0; i < str.length; i += 1) {
+    if (Object.values(brackets).includes(str[i])) {
+      stack.push(str[i]);
+    } else if (stack[stack.length - 1] === brackets[str[i]]) {
+      stack.pop();
+    } else {
+      return false;
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -373,8 +402,15 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((s) => s.split('/'));
+  const res = [];
+  for (let i = 0; i < arr[0].length; i += 1) {
+    if (arr.every((x) => x[i] === arr[0][i])) {
+      res.push(arr[0][i]);
+    }
+  }
+  return res.length > 0 ? `${res.join('/')}/` : '';
 }
 
 
