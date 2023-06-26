@@ -563,8 +563,10 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  const res = [];
+  arr.map((x) => res.push(childrenSelector(x)));
+  return res.flat();
 }
 
 
@@ -581,11 +583,8 @@ function selectMany(/* arr, childrenSelector */) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  let array = arr.slice(0);
-  indexes.forEach((index) => {
-    array = array[index];
-  });
-  return array;
+  const array = arr.slice(0);
+  return indexes.reduce((acc, el) => acc[el], array);
 }
 
 
